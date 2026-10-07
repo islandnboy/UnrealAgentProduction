@@ -6,6 +6,8 @@ DataForge는 게임 데이터를 코드나 Unreal Editor에 직접 반복 입력
 
 독립 실행형 GUI와 CLI가 같은 Core를 사용합니다.
 
+📄 [DataForge 사용 가이드 (PDF)](../Docs/Guides/DataForgeUserGuide.pdf) — 실제 화면과 DT·DA·Config 작업, 결과 확인·오류 대응·실행 방법을 담은 7페이지 가이드입니다. (2026-10-07 구현 기준)
+
 ## Problem
 
 게임 데이터 제작에는 자주 다음 문제가 생깁니다.
