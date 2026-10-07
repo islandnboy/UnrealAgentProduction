@@ -64,6 +64,8 @@
 **Online Server** — Gateway·Account Server·Game Server를 연결해 접속·인증·게임 진입·영속화 흐름을 구성합니다.
 
 - [Server Production Case Study](CaseStudies/ServerProduction.md) — 서버 구성, Player·World 상태 저장과 클라이언트 연동 검증
+- [Server Architecture / Topology](Docs/Server/ServerArchitecture.md) — 서비스 구성, Authority와 데이터·프로토콜 경계
+- [Gateway Deployment Design](Docs/Server/GatewayDeploymentDesign.md) — AS 풀·LB·Coordination·로컬 런처·배포 설계
 
 ## Data
 
