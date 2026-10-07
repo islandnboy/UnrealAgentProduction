@@ -70,6 +70,7 @@
 **DataForge** — Excel 입력에서 Unreal DataTable·서버 JSON까지 게임 데이터를 변환하고 결과의 일치 여부를 검증하는 파이프라인입니다.
 
 - [DataForge Case Study](CaseStudies/DataForge.md) — GUI·CLI 공통 처리, 증분 변환과 Bake·Readback·Parity 검증
+- [DataForge 사용 가이드 (PDF)](Docs/Guides/DataForgeUserGuide.pdf) — 화면 안내, DT 빌드, DA·Config 조회와 결과·오류 확인
 
 ## 현재 상태
 
