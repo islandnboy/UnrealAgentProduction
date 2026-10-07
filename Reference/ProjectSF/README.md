@@ -1,19 +1,46 @@
-# Project SF Agent Workflow Snapshot
+# ProjectSF current workflow snapshot
 
-이 디렉터리는 포트폴리오 확인용 Snapshot입니다.
+이 디렉터리는 비공개 working repository인 ProjectSF의 **현재 Agent Production 구조를 포트폴리오용으로 선별 정리한 Snapshot**입니다.
 
-**Source of Truth는 항상 [Project SF](https://github.com/islandnboy/ProjectSF)의 `AI/`입니다.**
+전체 게임 코드, 콘텐츠, Issue, Production Data/Evidence는 공개하지 않습니다.
 
-여기에는 Project SF에서 실제로 사용 중인 Agent Workflow 문서 중, 현재 구현이 완료되어 있고 포트폴리오에서 구조를 이해하는 데 도움이 되는 핵심 문서만 선별해 복사합니다.
+## Current source structure
 
-## Included
+~~~text
+AGENTS.md
+.agents/skills/
+AI/
+├─ Workflows/
+├─ Rules/
+└─ Skills/
 
-- `AI-README.md` — Agent Workflow / Production Framework 전체 구조
-- `PromptCompilation.md` — 자연어 요청을 실행 가능한 Prompt로 정규화하는 Workflow
-- `ContextBudgetPolicy.md` — Resolve Then Expand 기반 Context Budget 정책
+Docs/
+├─ Project/
+├─ Design/
+├─ Technical/
+├─ Production/
+└─ Development/
 
-## Policy
+Tools/AgentPipeline/
+├─ Config/
+├─ Registry/
+├─ Schemas/
+├─ Scripts/
+├─ Templates/
+├─ Examples/
+└─ Tests/
 
-- 이 Repository에서 원본 계약을 수정하지 않습니다.
-- 최신 상태와 충돌할 경우 Project SF 원본을 기준으로 봅니다.
-- 포트폴리오 설명용 문서는 상위 `Docs/`, 실제 Project SF 계약 Snapshot은 이 폴더에 둡니다.
+Production/
+├─ Data/
+└─ Evidence/
+~~~
+
+## Included here
+
+- [Structure](Structure.md)
+- [Current Context Budget Policy](ContextBudgetPolicy.md)
+- [Current Execution Observability](ExecutionObservability.md)
+- [UI production Skill snapshot](Skills/ui-production/SKILL.md)
+- [Road production Skill snapshot](Skills/road-production/SKILL.md)
+
+포트폴리오 설명은 상위 `Docs/`가 담당하고, 이 폴더는 실제 ProjectSF 구조가 어떤 형태로 운영되는지 확인하기 위한 선택적 Snapshot입니다.

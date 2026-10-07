@@ -1,27 +1,40 @@
 # UI Production Case Study
 
-> Portfolio v0.1 draft. 실제 Production Evidence를 선별해 추가할 예정입니다.
-
 ## Goal
 
-기획자의 자연어 요청을 Project SF의 CommonUI / MVVM 규칙에 맞는 Unreal UI 제작 작업으로 연결합니다.
+자연어 UI 요청을 기존 Unreal UI 구조와 연결해 **실제 사용 가능한 Widget / binding / interaction**으로 제작합니다.
 
-## Flow
+## Current flow
 
-```text
-Natural Language Request
-→ Existing UI Pattern Inspection
-→ Skill / Guideline Resolution
-→ Compiled Prompt
-→ CommonUI / MVVM MCP
-→ Compile / Binding / Reference Validation
+~~~text
+Request / Issue
+→ bootstrap + current SoT
+→ inspect existing UI assets and architecture
+→ ui-production / ui-architecture Skill
+→ derive logical capability
+→ live MCP binding
+→ create / edit
+→ compile / save / readback
+→ interaction and intent validation
 → Evidence
-```
+~~~
 
-## Evidence to add
+## Production principles
 
-- Original request
-- Compiled Prompt Trace
-- Existing pattern / reuse decision
-- Unreal Editor screenshot
-- Validation result
+- 새 Widget을 만들기 전에 기존 구조를 조사합니다.
+- 표시 책임과 상태 / 명령 책임을 구분합니다.
+- reusable component와 ViewModel source를 먼저 검토합니다.
+- placeholder를 승인된 결과로 승격하지 않습니다.
+- 실제 Tool 이름은 Skill에 고정하지 않고 live discovery로 해결합니다.
+
+## Validation
+
+- Asset / Object identity
+- compile
+- save / readback
+- input / focus / activation
+- data binding result
+- visual review
+- untested items are reported as `NOT_TESTED`
+
+이 사례의 핵심은 “UI를 Agent가 만들었다”가 아니라 **프로젝트의 기존 UI 규칙과 실제 Editor 결과를 같은 계약 안에서 연결했다는 것**입니다.
