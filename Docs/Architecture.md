@@ -1,6 +1,6 @@
 # Architecture
 
-현재 Unreal Agent Production의 구조는 ProjectSF에서 실제 운영 중인 Agent Workflow를 기준으로 합니다.
+현재 Agent Workflow의 구조는 ProjectSF에서 실제 운영 중인 Agent Workflow를 기준으로 합니다.
 
 ## 1. Repository entry
 
