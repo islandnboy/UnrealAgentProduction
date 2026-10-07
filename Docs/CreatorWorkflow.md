@@ -1,20 +1,27 @@
 # Creator Workflow
 
-이 문서는 **기획자 / 디자이너가 Agent Workflow를 실제 제작 도구로 사용하는 과정**을 설명합니다.
+Creator Workflow는 **제작자와 Agent가 같은 제작 흐름을 공유하는 방식**을 설명합니다.
 
-Creator는 특정 직군명이 아닙니다. 기획자, 프로그래머, 아티스트 누구든 현재 Goal을 정의하고 결과를 판단하는 사람이 Creator가 될 수 있습니다.
+여기서 Creator는 특정 직군을 뜻하지 않습니다.  
+기획, 프로그래밍, 아트 등 어떤 역할이든 **직접 결과물을 만들고 판단하는 사람**을 의미합니다.
 
-## The designer does not operate the framework
+핵심 원칙은 단순합니다.
 
-기획자가 알아야 하는 것은 Tool ID, MCP schema, Skill 이름이 아닙니다.
+> Creator는 제품 의도와 완료 기준을 정의하고, Agent는 현재 프로젝트 상태를 읽어 실행 방법을 판단합니다.
 
-기획자는 다음을 전달합니다.
+Creator가 Tool ID, MCP schema, Skill 이름, 내부 Runtime 구조를 직접 운영할 필요는 없습니다.
 
-- 무엇을 만들고 싶은가
-- 어디까지 바꿔도 되는가
-- 무엇은 보존해야 하는가
-- 어떤 상태를 완료로 볼 것인가
-- 현재 결과에서 무엇이 마음에 들지 않는가
+---
+
+## 1. Creator가 정의하는 것
+
+Creator는 다음을 전달합니다.
+
+- **Goal** — 무엇을 만들고 싶은가
+- **Scope** — 어디까지 변경해도 되는가
+- **Protection** — 무엇은 보존해야 하는가
+- **Acceptance** — 어떤 상태를 완료로 볼 것인가
+- **Feedback** — 현재 결과에서 무엇을 수정해야 하는가
 
 예:
 
@@ -26,155 +33,223 @@ Creator는 특정 직군명이 아닙니다. 기획자, 프로그래머, 아티�
 후속 Gameplay가 위치별 흐름 방향과 속도를 조회할 수 있어야 한다.
 ~~~
 
-이 요구는 Agent가 현재 프로젝트 상태와 Production 계약에 맞게 실행 가능한 Step으로 해석합니다.
+Agent는 이 요구를 현재 Repository / Issue / Workflow와 대조해 실행 가능한 작업으로 해석합니다.
 
-## Working loop
+---
+
+## 2. 공용 제작 Loop
+
+사람과 Agent는 서로 다른 공정을 쓰지 않습니다.
 
 ~~~text
-1. 기획 의도
+Creator Intent
    ↓
-2. Goal / Scope / Acceptance
+Goal / Scope / Acceptance
    ↓
-3. Issue / Recipe
+Issue / Recipe
    ↓
-4. Codex Agent 실행
+Agent 또는 Creator Tool 실행
    ↓
-5. Unreal 결과물 + Evidence
+Game / Unreal 결과
    ↓
-6. 기획자 검수
+Validation / Evidence
+   ↓
+Creator Review
    ├─ 승인
-   ├─ 자연어 수정 지시
-   └─ 직접 Editor 수정
+   ├─ 수정 요청
+   └─ 직접 수정
    ↓
-7. 다음 Agent가 현재 결과를 읽고 계속
+현재 결과를 기준으로 다음 작업
 ~~~
 
-## Creator-facing tools
+중요한 점은 **사람의 직접 수정도 정상 Production 과정에 포함된다는 것**입니다.
 
-모든 제작을 자연어 Agent 요청만으로 처리할 필요는 없습니다.
+Agent가 만든 결과를 사람이 Editor에서 수정한 뒤 저장하면, 다음 Agent는 그 결과를 현재 상태로 읽고 이어서 작업합니다.
 
-반복적으로 사람이 직접 다루는 작업은 Creator용 Tool로 승격합니다.
+---
+
+## 3. Creator의 책임
+
+Creator가 판단하는 것은 제품 결과입니다.
+
+### 작업 전
+
+- 무엇을 만들 것인가
+- 어떤 결과를 기대하는가
+- 어디까지 변경 가능한가
+- 어떤 기존 결과를 보존해야 하는가
+
+### 작업 중
+
+- 현재 결과가 의도와 맞는가
+- 방향을 바꿔야 하는가
+- 직접 수정하는 편이 빠른가
+- 추가 제작이 필요한가
+
+### 작업 후
+
+- 실제 결과가 Acceptance를 만족하는가
+- 기술 검증과 별개로 시각·경험 품질이 충분한가
+- 다음 Iteration이 필요한가
+
+Creator는 모든 내부 실행 로그를 읽을 필요가 없습니다.
+
+필요한 것은 **현재 결과, 검증 상태, 남은 문제, 다음 행동**입니다.
+
+---
+
+## 4. Agent의 책임
+
+Agent는 Creator의 의도를 구현 가능한 작업으로 연결합니다.
+
+~~~text
+Creator Request
+→ Current Source of Truth 확인
+→ Workflow / Step 판단
+→ Rule / Skill / Recipe 선택
+→ 필요한 Capability 판단
+→ Tool 실행
+→ 결과 검증
+→ Evidence
+→ Goal 평가
+~~~
+
+Agent는 다음을 대신 판단합니다.
+
+- 어떤 Skill이 필요한가
+- 어떤 Tool을 사용할 것인가
+- 기존 결과를 재사용할 것인가
+- 부분 수정할 것인가
+- 반복 작업을 Recipe나 Tool로 승격할 가치가 있는가
+
+단, **기술적인 PASS가 Creator의 최종 승인까지 의미하지는 않습니다.**
+
+---
+
+## 5. 직접 제작도 같은 Workflow다
+
+Creator가 Unreal Editor나 외부 Tool에서 직접 수정하는 것도 예외 경로가 아닙니다.
+
+예:
+
+- Spline 위치 수정
+- Road width / lane parameter 조정
+- Material 선택
+- PCG parameter 수정
+- Water depth / shoreline 조정
+- UI 배치·크기·레이아웃 수정
+- Excel 기반 밸런스 데이터 편집
+
+~~~text
+Agent Result
+→ Creator 직접 수정
+→ Save
+→ 현재 Production State
+→ 다음 Agent가 상태 확인
+→ 기존 수정 보존
+→ 필요한 부분만 계속 제작
+~~~
+
+이전 generation을 무조건 다시 실행해 사람의 수정 내용을 덮어쓰지 않습니다.
+
+---
+
+## 6. Creator-facing Tool
+
+모든 반복 작업을 자연어 Agent 요청으로 처리할 필요는 없습니다.
+
+반복성과 입력·출력이 명확한 작업은 Creator가 직접 사용할 수 있는 Tool로 승격합니다.
 
 대표 사례가 **DataForge**입니다.
 
 ~~~text
-Designer edits XLSX
+Creator edits XLSX
 → DataForge Refresh
-→ Modified datasets 확인
-→ Build Changed / Build Selected
-→ Unreal DataTable Bake + Readback
-→ Server JSON parity
+→ 변경 Dataset 확인
+→ Build Selected / Build Changed
+→ Unreal DataTable Bake
+→ Readback / Parity
+→ Server JSON
 → Result / Warning / Diff 확인
 ~~~
 
-기획자는 Unreal asset binary나 Server JSON을 직접 관리하지 않고, Authoring Source와 결과 검수에 집중할 수 있습니다.
+Creator는 Unreal asset binary나 Server JSON을 직접 관리하지 않고 **Authoring Source와 결과 검수**에 집중합니다.
 
-DataAsset과 Config는 각각 Unreal native source를 유지하며 DataForge에서 read-only inspect / extract합니다.
+DataAsset과 Config는 각각 Unreal native source를 유지하며 DataForge에서는 read-only inspect / extract 경로를 사용합니다.
 
-## What the designer sees
+---
 
-Agent 내부의 모든 로그를 읽게 하지 않습니다.
+## 7. Production Artifact
 
-기획자가 확인해야 할 핵심은 다음입니다.
-
-### Before production
-
-- Goal
-- Scope
-- protected content
-- Acceptance
-- 현재 선택된 제작 방향
-
-### During production
-
-- 현재 Step
-- 적용된 전문 Skill
-- 실제 실행한 Tool
-- 현재 결과와 검증 상태
-- 다음 행동
-
-### After production
-
-- Unreal에서 만들어진 실제 결과
-- before / after
-- 기술적으로 검증된 항목
-- 아직 미검증인 항목
-- 사람이 판단해야 하는 시각·경험 품질
-- 다음 수정 지점
-
-## Designer artifacts
-
-기획자의 작업 역시 Production의 중요한 산출물입니다.
+Creator와 Agent가 공유하는 제작 정보는 대화에만 남지 않습니다.
 
 ~~~text
-Design Intent
+Production
 ├─ Issue
 │  ├─ Goal
 │  ├─ Scope
 │  ├─ Requirements
 │  └─ Acceptance
-├─ Recipe, when reusable
+├─ Recipe
 ├─ Authoring Data
-├─ Review notes
-├─ Owner decisions
-└─ Result acceptance / correction
+├─ Result Artifact
+├─ Validation Evidence
+├─ Creator Review
+└─ Final Decision
 ~~~
 
-이 정보는 Agent용 Prompt에만 존재하지 않고 GitHub Issue와 Docs에 남습니다.
+지속되는 Goal과 판단은 Issue에, 반복 가능한 제작 계약은 Recipe에, 실제 입력과 결과 검증은 Data / Evidence에 남깁니다.
 
-## Human edit is first-class production
+---
 
-기획자가 Unreal Editor에서 직접 값을 수정하는 것도 정상 작업입니다.
+## 8. 완료 판정
 
-예:
-
-- spline 위치 조정
-- road width / lane parameter 수정
-- Material 선택
-- PCG parameter 조정
-- water depth / shoreline 조정
-- UI 위치·크기·레이아웃 수정
-
-사람이 저장한 결과는 다음 Agent에게 단순한 “외부 변경”이 아니라 **현재 Production state**입니다.
+다음 세 단계는 서로 다릅니다.
 
 ~~~text
-Agent result
-→ Designer edits in Unreal
-→ Save
-→ Production state / Evidence
-→ Next Agent observes current state
-→ preserves or extends the edit
+Tool Success
+   ↓
+Technical Validation
+   ↓
+Creator Acceptance
 ~~~
 
-AI가 이전 generation을 무조건 다시 실행해 사람의 수정 내용을 지우는 방식은 피합니다.
+예를 들어 Unreal Asset이 정상 생성되고 저장됐더라도:
 
-## What belongs in a portfolio
+- 화면 품질이 부족할 수 있고
+- 플레이 경험이 의도와 다를 수 있고
+- 후속 수정이 필요할 수 있습니다.
 
-Agent Workflow 포트폴리오에서는 다음 세 종류를 같이 보여주는 것이 중요합니다.
+따라서 Agent는 Tool 성공만으로 제품 완료를 선언하지 않습니다.
 
-### 1. Intent
+최종적으로 제품 결과를 승인하는 것은 Creator입니다.
 
-기획자가 실제로 어떤 요구를 했는지.
+---
 
-### 2. Process
+## 9. Portfolio에서 보여주는 것
 
-Issue / Recipe / Agent Step / Unreal MCP 또는 Creator Tool이 어떻게 연결됐는지.
-
-### 3. Result
-
-Unreal 결과 화면, 데이터 산출물, 구조적 결과, 검증 Evidence, 그리고 사람이 남긴 최종 판단.
-
-즉 포트폴리오의 단위는 “Agent 기능”보다 다음 형태에 가깝습니다.
+Creator Workflow의 포트폴리오 단위는 “Agent 기능”이 아닙니다.
 
 ~~~text
 Problem
-→ Designer Intent
+→ Creator Intent
 → Production Contract
 → Agent / Creator Tool Execution
-→ Game Result
+→ Actual Result
 → Validation
-→ Human Review
+→ Creator Review
 → Iteration
 ~~~
 
-이 구조를 통해 기획자가 개발자의 구현 세부를 알지 않아도 실제 제작 Loop에 참여할 수 있다는 점을 보여줍니다.
+각 Case Study에서는 가능한 한 다음을 함께 보여줍니다.
+
+- Creator의 실제 요구
+- Issue / Acceptance
+- 제작 과정
+- Unreal / Game 결과
+- Before / After
+- 기술 검증
+- Creator의 수정 또는 승인
+- 다음 Iteration
+
+이를 통해 **사람과 AI가 별도의 작업자가 아니라 같은 Production Workflow 안에서 결과를 반복 개선한다는 것**을 보여줍니다.
