@@ -44,7 +44,7 @@
 | --- | --- |
 | [Architecture](Docs/Architecture.md) | Workflow·Rule·Skill·Recipe·Runtime·Evidence의 책임과 경계 |
 | [Production Model](Docs/ProductionModel.md) | 공통 제작 계약, 반복 개선과 재사용 도구 승격 |
-| [Recipe Production](CaseStudies/RecipeProduction.md) | 도로 부분 재생성으로 보는 입력·절차·검증·사람 편집 보존 계약 |
+| [Recipe Templates](CaseStudies/RecipeProduction.md) | 영웅·몬스터·월드·도로·수계·데이터·서버의 제작 계약 양식과 사용 사례 |
 | [MCP Execution](Docs/MCPExecution.md) | Unreal Editor 실행과 도구 연결 방식 |
 | [Project Structure](Reference/ProjectSF/Structure.md) | 작업 저장소의 디렉터리 구조와 역할 |
 | [World Production](CaseStudies/WorldProduction.md) | 지형·도로·수계 등 Unreal 월드 제작 과정 |
