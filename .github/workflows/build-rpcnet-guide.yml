@@ -1,0 +1,49 @@
+name: Build RPCNet protocol guide
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "Tools/Portfolio/BuildRpcNetProtocolGuide.py"
+      - ".github/workflows/build-rpcnet-guide.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install document dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-nanum fonts-dejavu-core
+          python -m pip install --upgrade pip
+          python -m pip install reportlab
+
+      - name: Build PDF
+        run: |
+          RPCNET_GUIDE_OUT="Docs/Guides/RPCNet_Protocol_to_Unreal_Client_Guide.pdf"             python Tools/Portfolio/BuildRpcNetProtocolGuide.py
+          test -s Docs/Guides/RPCNet_Protocol_to_Unreal_Client_Guide.pdf
+
+      - name: Commit generated guide
+        run: |
+          if git diff --quiet -- Docs/Guides/RPCNet_Protocol_to_Unreal_Client_Guide.pdf; then
+            echo "Guide is already up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Docs/Guides/RPCNet_Protocol_to_Unreal_Client_Guide.pdf
+          git commit -m "docs: build RPCNet protocol client PDF guide"
+          git push
