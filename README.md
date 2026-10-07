@@ -95,7 +95,7 @@ Runtime / Session / Transport / Codec과 Protocol Generator를 Project-specific 
 - Consumer Integration / framework boundary validation
 - validation checkpoint: **37 tests + actual Unreal interop PASS**
 
-[RPCNet Case Study](CaseStudies/RPCNet.md)
+[RPCNet Case Study](CaseStudies/RPCNet.md) · [Protocol → Unreal Client Guide (PDF)](Docs/Guides/RPCNet_Protocol_to_Unreal_Client_Guide.pdf)
 
 ### Online Server — Gateway / AS / GS
 
