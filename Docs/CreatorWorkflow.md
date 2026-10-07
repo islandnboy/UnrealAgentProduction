@@ -49,6 +49,28 @@ Creator는 특정 직군명이 아닙니다. 기획자, 프로그래머, 아티�
 7. 다음 Agent가 현재 결과를 읽고 계속
 ~~~
 
+## Creator-facing tools
+
+모든 제작을 자연어 Agent 요청만으로 처리할 필요는 없습니다.
+
+반복적으로 사람이 직접 다루는 작업은 Creator용 Tool로 승격합니다.
+
+대표 사례가 **DataForge**입니다.
+
+~~~text
+Designer edits XLSX
+→ DataForge Refresh
+→ Modified datasets 확인
+→ Build Changed / Build Selected
+→ Unreal DataTable Bake + Readback
+→ Server JSON parity
+→ Result / Warning / Diff 확인
+~~~
+
+기획자는 Unreal asset binary나 Server JSON을 직접 관리하지 않고, Authoring Source와 결과 검수에 집중할 수 있습니다.
+
+DataAsset과 Config는 각각 Unreal native source를 유지하며 DataForge에서 read-only inspect / extract합니다.
+
 ## What the designer sees
 
 Agent 내부의 모든 로그를 읽게 하지 않습니다.
@@ -92,6 +114,7 @@ Design Intent
 │  ├─ Requirements
 │  └─ Acceptance
 ├─ Recipe, when reusable
+├─ Authoring Data
 ├─ Review notes
 ├─ Owner decisions
 └─ Result acceptance / correction
@@ -135,11 +158,11 @@ Agent Workflow 포트폴리오에서는 다음 세 종류를 같이 보여주는
 
 ### 2. Process
 
-Issue / Recipe / Agent Step / Unreal MCP가 어떻게 연결됐는지.
+Issue / Recipe / Agent Step / Unreal MCP 또는 Creator Tool이 어떻게 연결됐는지.
 
 ### 3. Result
 
-Unreal 결과 화면, 구조적 결과, 검증 Evidence, 그리고 사람이 남긴 최종 판단.
+Unreal 결과 화면, 데이터 산출물, 구조적 결과, 검증 Evidence, 그리고 사람이 남긴 최종 판단.
 
 즉 포트폴리오의 단위는 “Agent 기능”보다 다음 형태에 가깝습니다.
 
@@ -147,8 +170,8 @@ Unreal 결과 화면, 구조적 결과, 검증 Evidence, 그리고 사람이 남
 Problem
 → Designer Intent
 → Production Contract
-→ Agent Execution
-→ Unreal Result
+→ Agent / Creator Tool Execution
+→ Game Result
 → Validation
 → Human Review
 → Iteration

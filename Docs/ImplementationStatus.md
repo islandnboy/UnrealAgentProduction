@@ -52,6 +52,43 @@
 - human / AI shared production state
 - input revision and validation evidence
 
+## Engineering systems built with the workflow
+
+### RPCNet
+
+- reusable Unreal network Runtime
+- TCP / WebSocket / Mock / Memory transport
+- Session / Codec / Proxy / Stub boundary
+- C# ProtocolGenerator
+- generated / handwritten ownership separation
+- ProjectSF Consumer Integration boundary
+- framework boundary validator
+- checkpoint: 37 tests + actual Unreal interoperability PASS
+
+### Online Server
+
+- Gateway / AS / GS topology
+- GS Directory / Registry
+- Player / World / PlayerScope persistent authority
+- Repository / persistence boundary
+- weighted Gateway connection balancing
+- TLS ingress
+- Launcher / Bot verification
+- current-phase clean build 0 warnings/errors + 52 tests PASS
+- actual UE Entry → Login → GS → PlayerScope → NeoSeoul integration
+
+### DataForge
+
+- standalone Windows GUI + CLI shared Core
+- XLSX / XLSM DataTable Authoring SoT
+- incremental dataset-level dirty detection
+- SFDataBuildCommandlet Bake / Readback
+- generated Server JSON parity
+- DA / PrimaryDataAsset / INI native read-only extraction
+- rollback / last-successful publication gate
+- first vertical slice parity PASS
+- 25 Core regression tests PASS
+
 ### Unreal production
 
 Current applied areas include:
@@ -61,7 +98,8 @@ Current applied areas include:
 - water / river / lake production
 - world structure and validation
 - UI production
-- selected server workflow verification
+- server and client-online integration
+- data production
 
 ## Active R&D
 
@@ -70,6 +108,8 @@ Current applied areas include:
 - production performance measurement for road / water / world output
 - more reusable batch execution around verified Recipes
 - stronger human ↔ AI round-trip editing evidence
+- DataForge advanced data types and production consumer rollout
+- production-grade Server HA / RDB / WAN deployment
 - continued reduction of duplicated rules and stale workflow paths
 
 ## Not claimed
@@ -80,4 +120,6 @@ Current applied areas include:
 - universal Unreal capability coverage
 - zero-review visual production
 - arbitrary project portability without project-specific Rules / Skills
+- production-grade multi-region Server deployment
+- DataForge support for every Unreal data shape
 - tool success as proof of product quality

@@ -39,9 +39,9 @@ Natural-language request / GitHub Issue
                 ↓
  Agent decides required capability
                 ↓
- AgentPipeline validates execution contract
+AgentPipeline / reusable production tools
                 ↓
- Official Unreal MCP / deterministic tools
+ Official Unreal MCP / deterministic execution
                 ↓
  Validation + Evidence
                 ↓
@@ -56,31 +56,82 @@ Natural-language request / GitHub Issue
 **Agent decides meaning. Runtime validates execution.**
 
 Agent는 요청의 의미, 현재 Step, 필요한 전문성, 요구 capability를 판단합니다.  
-AgentPipeline은 그 판단을 대신하는 키워드 Router가 아니라 **schema, binding, preflight, execution, evidence를 검증하는 실행 계층**입니다.
+Runtime과 제작 Tool은 그 판단을 대신하는 키워드 Router가 아니라 **실행·변환·검증을 결정론적으로 수행하는 계층**입니다.
 
 ## Designer / Creator workflow
 
 이 Workflow는 개발자만을 위한 구조가 아닙니다.
 
-기획자는 내부 Tool 이름이나 MCP schema를 몰라도 자연어와 Issue로 목표와 완료 기준을 정의하고, 제작 중간 결과를 검수하고, Unreal Editor에서 직접 수정한 결과를 다시 다음 Agent 작업으로 연결할 수 있습니다.
+기획자는 내부 Tool 이름이나 MCP schema를 몰라도 자연어와 Issue로 목표와 완료 기준을 정의하고, 제작 중간 결과를 검수하고, Unreal Editor 또는 Creator Tool에서 직접 수정한 결과를 다시 다음 Agent 작업으로 연결할 수 있습니다.
 
 ~~~text
 기획 의도
 → Goal / Scope / Acceptance
 → Issue / Recipe
-→ Agent Production
-→ Unreal 결과물
+→ Agent / Creator Tool Production
+→ Game Result
 → 기술 검증 / Evidence
 → 기획자 시각·경험 검수
-→ 수정 지시 또는 직접 Editor 수정
-→ 다음 Agent가 현재 결과를 이어서 작업
+→ 수정 지시 또는 직접 수정
+→ 다음 작업자가 현재 결과를 이어서 작업
 ~~~
-
-포트폴리오에서는 Agent 내부 구조뿐 아니라 **기획자가 어떤 입력을 주고 어떤 결과물을 확인했는지**도 함께 기록합니다.
 
 - [Creator Workflow](Docs/CreatorWorkflow.md)
 - [Designer-led Production Case Study](CaseStudies/DesignerProduction.md)
 - [Designer Artifact Set](Samples/DesignerArtifactSet.md)
+
+## Engineering systems
+
+Agent Workflow를 실제 ProjectSF 제작에 적용하면서 다음 재사용 시스템을 함께 구축했습니다.
+
+### RPCNet — reusable network framework
+
+Runtime / Session / Transport / Codec과 Protocol Generator를 Project-specific protocol semantics에서 분리했습니다.
+
+- TCP / WebSocket / Mock / Memory transport
+- Unreal runtime plugin
+- generated Proxy / Stub + handwritten Endpoint boundary
+- C# ProtocolGenerator
+- Consumer Integration / framework boundary validation
+- validation checkpoint: **37 tests + actual Unreal interop PASS**
+
+[RPCNet Case Study](CaseStudies/RPCNet.md)
+
+### Online Server — Gateway / AS / GS
+
+~~~text
+Client → Gateway → Account Server → GS Directory → Game Server
+~~~
+
+- health-checked / weighted Gateway ingress
+- Account/Auth authority
+- Player / World / PlayerScope persistent authority
+- Repository / persistence boundary
+- Launcher + external Bot verification
+- current-phase: clean build 0 warnings/errors, **52 tests PASS**
+- actual UE Entry → Login → GS → PlayerScope → NeoSeoul flow
+
+[Server Production Case Study](CaseStudies/ServerProduction.md)
+
+### DataForge — creator-facing data production
+
+~~~text
+XLSX/XLSM
+→ DataForge
+→ Unreal DataTable + Server JSON
+→ Bake / Readback / Parity
+~~~
+
+- standalone GUI / CLI shared Core
+- dataset-level incremental build
+- DT Excel Authoring SoT
+- DA / Config native read-only extraction
+- SFDataBuildCommandlet integration
+- rollback / publication gate
+- first real vertical slice: Client / Server parity PASS
+- **25 Core regression tests PASS**
+
+[DataForge Case Study](CaseStudies/DataForge.md)
 
 ## Source of Truth
 
@@ -109,7 +160,7 @@ AgentPipeline은 그 판단을 대신하는 키워드 Router가 아니라 **sche
    직군별 hand-off보다 하나의 Goal과 Acceptance를 중심으로 필요한 전문 Skill을 조합합니다.
 
 4. **Human and AI share the same production pipeline**  
-   사람이 Editor에서 수정한 결과도 정상 Production 입력이며, AI는 이를 덮어쓰지 않고 관측·보존·계속합니다.
+   사람이 Editor나 Creator Tool에서 수정한 결과도 정상 Production 입력입니다.
 
 5. **Evidence over tool success**  
    MCP 호출, Build, Compile, Asset 생성 성공만으로 완료 처리하지 않습니다.
@@ -128,10 +179,12 @@ AgentPipeline은 그 판단을 대신하는 키워드 Router가 아니라 **sche
 - [Creator Workflow](Docs/CreatorWorkflow.md)
 - [Unreal MCP Execution](Docs/MCPExecution.md)
 - [Implementation Status](Docs/ImplementationStatus.md)
-- [Designer-led Production Case Study](CaseStudies/DesignerProduction.md)
-- [World Production Case Study](CaseStudies/WorldProduction.md)
-- [UI Production Case Study](CaseStudies/UIProduction.md)
-- [Server Production Case Study](CaseStudies/ServerProduction.md)
+- [Designer-led Production](CaseStudies/DesignerProduction.md)
+- [World Production](CaseStudies/WorldProduction.md)
+- [UI Production](CaseStudies/UIProduction.md)
+- [RPCNet](CaseStudies/RPCNet.md)
+- [Online Server](CaseStudies/ServerProduction.md)
+- [DataForge](CaseStudies/DataForge.md)
 - [ProjectSF structure snapshot](Reference/ProjectSF/README.md)
 
 ## Applied domains
@@ -140,11 +193,12 @@ AgentPipeline은 그 판단을 대신하는 키워드 Router가 아니라 **sche
 
 - Designer-led Issue / Recipe production
 - Terrain / Landscape production
-- Road batch production
-- Water / river / lake production
-- World structure and validation
-- UI production and UI architecture
-- Server feature production and bot verification
+- Road / Water / World production
+- UI production and architecture
+- RPCNet framework evolution
+- Gateway / AS / GS server production
+- Client online login / PlayerScope integration
+- DataForge data production
 - Production input / evidence management
 - Agent workflow regression and maintenance
 
