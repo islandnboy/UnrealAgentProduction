@@ -1,6 +1,6 @@
 # Server Production Case Study
 
-Unreal Agent Production의 핵심 구조는 Editor mutation만을 위한 것이 아닙니다.
+Agent Workflow의 핵심 구조는 Editor mutation만을 위한 것이 아닙니다.
 
 ProjectSF에서는 같은 Workflow / Step / Evidence 모델을 서버 기능 제작에도 적용합니다.
 
