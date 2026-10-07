@@ -58,6 +58,30 @@ Natural-language request / GitHub Issue
 Agent는 요청의 의미, 현재 Step, 필요한 전문성, 요구 capability를 판단합니다.  
 AgentPipeline은 그 판단을 대신하는 키워드 Router가 아니라 **schema, binding, preflight, execution, evidence를 검증하는 실행 계층**입니다.
 
+## Designer / Creator workflow
+
+이 Workflow는 개발자만을 위한 구조가 아닙니다.
+
+기획자는 내부 Tool 이름이나 MCP schema를 몰라도 자연어와 Issue로 목표와 완료 기준을 정의하고, 제작 중간 결과를 검수하고, Unreal Editor에서 직접 수정한 결과를 다시 다음 Agent 작업으로 연결할 수 있습니다.
+
+~~~text
+기획 의도
+→ Goal / Scope / Acceptance
+→ Issue / Recipe
+→ Agent Production
+→ Unreal 결과물
+→ 기술 검증 / Evidence
+→ 기획자 시각·경험 검수
+→ 수정 지시 또는 직접 Editor 수정
+→ 다음 Agent가 현재 결과를 이어서 작업
+~~~
+
+포트폴리오에서는 Agent 내부 구조뿐 아니라 **기획자가 어떤 입력을 주고 어떤 결과물을 확인했는지**도 함께 기록합니다.
+
+- [Creator Workflow](Docs/CreatorWorkflow.md)
+- [Designer-led Production Case Study](CaseStudies/DesignerProduction.md)
+- [Designer Artifact Set](Samples/DesignerArtifactSet.md)
+
 ## Source of Truth
 
 | Source | Responsibility |
@@ -101,8 +125,10 @@ AgentPipeline은 그 판단을 대신하는 키워드 Router가 아니라 **sche
 - [Architecture](Docs/Architecture.md)
 - [Execution Model](Docs/ExecutionModel.md)
 - [Production Model](Docs/ProductionModel.md)
+- [Creator Workflow](Docs/CreatorWorkflow.md)
 - [Unreal MCP Execution](Docs/MCPExecution.md)
 - [Implementation Status](Docs/ImplementationStatus.md)
+- [Designer-led Production Case Study](CaseStudies/DesignerProduction.md)
 - [World Production Case Study](CaseStudies/WorldProduction.md)
 - [UI Production Case Study](CaseStudies/UIProduction.md)
 - [Server Production Case Study](CaseStudies/ServerProduction.md)
@@ -112,13 +138,13 @@ AgentPipeline은 그 판단을 대신하는 키워드 Router가 아니라 **sche
 
 현재 ProjectSF에서 이 구조는 다음과 같은 실제 작업에 적용되고 있습니다.
 
+- Designer-led Issue / Recipe production
 - Terrain / Landscape production
 - Road batch production
 - Water / river / lake production
 - World structure and validation
 - UI production and UI architecture
 - Server feature production and bot verification
-- Issue-driven task execution
 - Production input / evidence management
 - Agent workflow regression and maintenance
 
