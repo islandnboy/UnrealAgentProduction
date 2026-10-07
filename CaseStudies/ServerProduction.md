@@ -6,6 +6,13 @@ ProjectSF 서버는 단일 게임 서버 프로세스에 모든 책임을 넣지
 
 Agent Workflow는 이 서버 작업에도 동일한 Issue / Step / Skill / Evidence 모델을 적용합니다.
 
+## Architecture references
+
+- [Server Architecture / Topology](../Docs/Server/ServerArchitecture.md) — 기존 구조 문서에서 선별한 토폴로지·Authority·Persistence·Protocol 경계
+- [Gateway Deployment Design](../Docs/Server/GatewayDeploymentDesign.md) — 기존 Gateway·AS 풀·Coordination·설치·런처 설계안의 공개 참고본
+
+목표 아키텍처와 설계안의 당시 검증 범위를 구분합니다. 후속 Client 연동과 검증 checkpoint는 이 사례의 Verification / Actual Unreal Client flow에서 확인합니다.
+
 ## Target architecture
 
 ~~~text
