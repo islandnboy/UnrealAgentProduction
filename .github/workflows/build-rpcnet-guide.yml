@@ -38,7 +38,7 @@ jobs:
 
       - name: Commit generated guide
         run: |
-          if git diff --quiet -- Docs/Guides/RPCNet_Protocol_to_Unreal_Client_Guide.pdf; then
+          if [ -z "$(git status --porcelain -- Docs/Guides/RPCNet_Protocol_to_Unreal_Client_Guide.pdf)" ]; then
             echo "Guide is already up to date."
             exit 0
           fi
