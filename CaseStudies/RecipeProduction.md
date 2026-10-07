@@ -1,80 +1,76 @@
-# Recipe Production Case Study
+# Creator Recipe Template Case Study
 
-## 제작 문제와 접근
+## 제작 문제와 해결
 
-월드 제작에서 도로를 다시 생성할 때마다 입력 해석·표현 선택·검증 기준을 새로 정하면, 작업자와 세션이 바뀔 때 결과를 이어서 수정하기 어렵습니다. ProjectSF의 제작 모델은 이 반복 작업을 **입력·절차·결과 표현·검증·재생성 경계를 공유하는 Recipe**로 정리합니다.
+기획 의도를 자연어 요청으로만 전달하면, 제작자가 바뀌거나 다른 세션에서 작업을 재개할 때 보존 범위·기대 결과·완료 기준을 다시 해석해야 합니다. ProjectSF는 **공통 Recipe Format과 작업별 작성 템플릿**으로 이 계약을 명시합니다.
 
-이 사례는 이미 공개된 제작 모델·도로 Skill·월드 사례를 바탕으로 재구성한 **공개용 제작 계약 예시**입니다. 비공개 원본 Recipe나 특정 실행의 완료 보고서를 그대로 공개한 문서는 아닙니다.
-
-## Workflow · Skill · Recipe · Tool의 역할
-
-| 구성 | 담당하는 판단 / 실행 |
-| --- | --- |
-| Workflow | 현재 작업 상태, 다음 Step, 목표 완료 여부 |
-| Skill | 도로 제작에 필요한 전문 판단, 표현 선택과 검증 방법 |
-| Recipe | 특정 반복 제작의 입력·절차·산출물·검증·재생성 계약 |
-| Tool / Unreal MCP | 선택된 계약에 따라 실제 생성·변환·조회 실행 |
-| Evidence | 입력 revision, 실행 조건과 결과를 확인할 근거 |
-
-## 사례: 편집 가능한 도로의 부분 재생성
-
-**요청 예시:** “선택한 도로 구간의 폭을 수정하고, 주변 도로와 사람이 편집한 결과를 보존해 주세요.”
-
-| 계약 항목 | 공개용 예시 |
-| --- | --- |
-| 입력 | 승인된 도로 원천, source identity, 현재 저장 상태, 수정할 구간 |
-| 설계 입력 | 도로 ID·이름·등급·경로·폭·차선·예외 override |
-| 보호 대상 | 작업 범위 밖의 도로, 사람이 수정한 결과, 영향받지 않는 연결부 |
-| 결과 표현 | 사람이 수정할 수 있는 설계 입력과 생성된 runtime 출력을 구분 |
-| 실행 수단 | 현재 Unreal 환경의 capability와 재사용 도구를 확인해 선택 |
-| 재생성 경계 | 변경 입력이 영향을 주는 범위만 갱신하고 나머지 결과 보존 |
-| 검증 | 형상·접지·연결·저장/재로드·편집 가능성·재생성 안전성·화면 가독성 |
-
-### 실행 흐름
+템플릿은 Creator와 GPT가 제작 의도를 다듬고, 사람이 확정한 Issue를 실행 Agent가 현재 상태와 대조해 수행하도록 연결하는 작성 도구입니다.
 
 ```text
-현재 입력·저장 결과 확인
-→ 변경 구간·보호 대상·재생성 경계 확정
-→ Road Design Input 수정
-→ 사용 가능한 표현과 실행 도구 선택
-→ 대표 구간 제작
-→ 기술 검증 + 화면 검토
-→ 근거를 기록하고 다음 수정 또는 승인 판단
+Creator Intent → 작업별 Recipe 작성 → 사람의 계약 확정 / Issue
+→ Agent의 현재 상태 판단 → Skill·Tool·MCP 실행
+→ 실제 결과·검증 근거 → Creator Review / 수정
 ```
 
-특정 graph·asset·Tool 이름을 공통 Skill에 고정하지 않습니다. 현재 환경에 맞는 실행 수단을 선택하면서, 입력과 결과의 관계·보호 범위·검증 조건을 유지합니다.
+## 실제 템플릿 구성
 
-### 사람이 수정하는 지점
+다음은 ProjectSF의 `Docs/Production/Recipes/`에서 확인한 작성 양식입니다. 아래 범위는 양식의 구성과 목적을 보여주며, 각 유형의 제작 완료를 주장하지 않습니다.
 
-- **Road Design Input:** 도로 폭·차선·경로·예외 값을 변경합니다.
-- **Editor의 편집 가능한 표현:** spline 등 선택된 표현에서 경로와 형상을 검토·수정합니다.
-- **Review / Acceptance:** 연결부 가독성과 의도한 결과를 확인하고 추가 수정을 요청하거나 승인합니다.
-
-다음 Agent는 사람의 수정 결과를 현재 제작 상태로 관측합니다. 다시 생성할 때는 그 결과가 보호 대상인지, 승인된 변경 대상인지 먼저 확인합니다.
-
-## 검증과 근거
-
-Recipe가 있다고 해서 실행 결과가 자동으로 승인되는 것은 아닙니다. 매 실행에서 입력 revision·도구·파라미터·변경 범위와 결과를 확인할 근거를 남깁니다.
-
-| 확인 대상 | 남길 근거 예시 |
+| 템플릿 | 작성하는 계약 |
 | --- | --- |
-| 입력과 출력의 관계 | source identity, 입력 revision, 생성 대상 대응 관계 |
-| 형상·접지·연결 | 측정 결과와 대표 구간 화면 |
-| 저장과 재로드 | 재로드 후 결과 조회 |
-| 부분 재생성과 사람 편집 보존 | 변경 전후 비교, 보호 대상 확인 |
-| 제작 품질 | 동일 카메라 비교와 제작자 검토 결과 |
+| `HeroProduction.template.md` | 플레이어 입력·Stat·공격/Ability·외형·피격/사망·사람 편집 왕복 |
+| `MonsterProduction.template.md` | Stat·인지/추적/공격·피격/사망·외형·사람 편집 왕복 |
+| `WorldRegionProduction.template.md` | 지형·수계·도로·건물, 제작 pass와 공간 품질 |
+| `RoadProduction.template.md` | 승인 source·Road Design Input·표현 선택·부분 재생성 |
+| `WaterProduction.template.md` | 수계 프리셋·개별 override·지형 인계·Native 물 생성/재사용 |
+| `DataProduction.template.md` | DT Excel 원천 빌드·DA/INI native 원천 조회·Server JSON·migration |
+| `ServerFramework.template.md` | topology·authority·내부 구조·통신/저장/소비자 검증 |
+| `Issue.template.md` | 확정한 Recipe, 결과 계약, Acceptance와 재개 문맥을 Issue로 정리 |
 
-이 문서는 위 검증 항목을 설명하는 계약 예시이며, 특정 실행에 대해 전체 PASS나 최종 승인을 주장하지 않습니다.
+[공통 작성 템플릿 보기](../Reference/ProjectSF/Recipes/Recipe.template.md)
 
-## Recipe로 정리하는 기준
+## 템플릿이 고정하는 것
 
-한 번 성공한 절차를 바로 Recipe로 승격하지 않습니다. 반복 비용이 존재하고, 입력과 결과 계약을 분리할 수 있으며, 재사용 품질과 검증 방법이 확인됐을 때 공통 제작 계약으로 정리합니다. 특정 Goal의 고유 값은 실행 입력으로 유지합니다.
+| 항목 | 역할 |
+| --- | --- |
+| CreatorIntent | 목표·플레이 경험·핵심 요구사항 |
+| Inputs / Preserve | 승인 입력·탐색 가능한 입력·보존할 기존 결과 |
+| ExpectedResult / ResultContract | 필요한 결과 표현·허용 preview·금지 대체물·관측할 변화·후속 공정 Gate |
+| Acceptance | 기계 검증·실제 Play/Editor 확인·Creator 판단 기준 |
+| CreatorSurface | 사람이 계속 수정할 표·Blueprint·DataAsset·Editor 영역 |
+| Dependencies / Capabilities | 실제 선행 조건·필요한 효과·실행 권한 경계 |
+| DefaultRoute / Evidence | 기본 진행 방향과 검증할 근거 |
 
-이 구조는 “AI가 도로를 생성했다”에서 더 나아가, **사람과 다음 Agent가 같은 입력을 수정하고 결과를 검증하며 제작을 이어갈 수 있는 과정**을 보여줍니다.
+**Goal·Acceptance·보존·권한·결과 계약은 유지하고, 실제 순서와 Tool 조합은 현재 상태를 본 Agent가 판단합니다.** 템플릿은 고정 Tool 명령열이나 실행 도구의 runtime schema가 아닙니다.
+
+## 대표 사례: 결과 계약과 사람 편집 지점
+
+월드 템플릿은 현재 제작 pass와 이번 통과 기준을 명시합니다. 수계에 실제 수위·수심·충돌·편집 동작이 필요하다면 일반 평면 Mesh를 완료 결과로 인정하지 않는 식으로 `RequiredRepresentation`과 `ForbiddenSubstitutes`를 구분합니다. preview를 허용한 경우에도 그 결과를 최종 Production이나 후속 공정의 기반 PASS로 자동 승격하지 않습니다.
+
+영웅·몬스터 템플릿은 사람이 조정할 Stat·Ability 구성·외형 파라미터와 실제 저장 위치를 연결합니다. `CreatorSurface`는 이 접근성을 요구하면서 내부 C++·GAS·Asset 구현 선택은 Agent가 프로젝트 계약에 맞춰 판단하도록 둡니다.
+
+데이터 템플릿은 DT의 XLSX/XLSM 원천과 DA/INI의 Unreal-native 원천을 구분합니다. 모든 데이터를 Excel로 통일하거나 자동 양방향 동기화한다고 가정하지 않습니다.
+
+## 작성과 검증
+
+1. 필요한 작업별 템플릿 하나를 선택하고 현재 기준 결과와 이번 변경을 작성합니다.
+2. 미확인은 `UNKNOWN`, 합의한 범위 밖은 `N/A — 이유`로 표시합니다.
+3. 사람이 확정한 계약을 Issue로 연결하고 실행 Agent가 저장소·Issue·현재 결과를 대조합니다.
+4. Acceptance별 기대값 → 관측 → Evidence → PASS/FAIL/NOT_TESTED/N/A를 기록합니다.
+5. Creator가 직접 값을 편집·저장한 뒤 Agent가 재조회·보존·반영했는지 확인합니다.
+
+Agent가 대신 값을 바꾼 것은 도구 검증이며, 사람 편집 왕복의 증거로 처리하지 않습니다. 유효한 기존 결과가 계약을 만족하면 재제작 없이 재사용할 수 있습니다.
+
+## 공개 범위와 검증 상태
+
+이 사례는 현재 저장소의 Recipe 안내·공통 형식·작업별 템플릿에서 확인한 **작성 구조**를 정리한 것입니다. 공개 참고 양식에는 공통 작성 필드와 사용 기준을 담고, 비공개 클래스·에셋 경로·작업별 값·Issue·원본 Evidence는 포함하지 않습니다.
+
+템플릿 존재와 실제 제작 성공은 구분합니다. 특정 Hero·Monster·World 작업의 전체 PASS나 Creator 최종 승인을 이 문서에서 주장하지 않습니다.
 
 ## 관련 자료
 
-- [Production Model](../Docs/ProductionModel.md) — Recipe 정의와 재사용 승격 기준
-- [Road Production Skill](../Reference/ProjectSF/Skills/road-production/SKILL.md) — 편집·재생성·검증 계약
-- [World Production](WorldProduction.md) — 도로·수계와 월드 검증 적용 범위
-- [Designer Artifact Set](../Samples/DesignerArtifactSet.md) — 요청·계약·결과·검토를 묶는 산출물 구성
+- [공통 Recipe 작성 템플릿](../Reference/ProjectSF/Recipes/Recipe.template.md)
+- [Creator Workflow](../Docs/CreatorWorkflow.md)
+- [Production Model](../Docs/ProductionModel.md)
+- [World Production](WorldProduction.md)
+- [DataForge](DataForge.md)
