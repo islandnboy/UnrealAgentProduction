@@ -6,6 +6,8 @@ RPCNet은 ProjectSF의 Client / Server 통신을 위해 개발했지만, 게임�
 
 핵심 목표는 프로젝트 코드에 socket / packet boilerplate를 반복해서 만들지 않고, **Runtime + Protocol Code Generation + Consumer Integration**의 경계를 명확히 하는 것입니다.
 
+> 실무 흐름을 그림 중심으로 정리한 포트폴리오 문서: [Protocol → Unreal Client Guide (PDF)](../Docs/Guides/RPCNet_Protocol_to_Unreal_Client_Guide.pdf)
+
 ## Problem
 
 게임 네트워크 구현이 프로젝트 전용 코드와 강하게 결합되면 다음 문제가 생깁니다.
